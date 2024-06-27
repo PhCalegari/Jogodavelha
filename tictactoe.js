@@ -71,6 +71,97 @@ function atualizarRanking(winner, isDraw = false) {
 }
 
 // Executa a função inicialmente para configurar o estado correto do campo de jogador 2 ao carregar a página
-document.addEventListener('DOMContentLoaded', function () {
-    atualizarCampoJogador2(); // Verifica o estado inicial do checkbox
-    criaTable(); // Cria a tabela de rankings ao carregar a página
+    document.addEventListener('DOMContentLoaded', function () {
+        atualizarCampoJogador2(); // Verifica o estado inicial do checkbox
+        criaTable(); // Cria a tabela de rankings ao carregar a página
+        const checkboxRobo = document.getElementById('checkboxRobo');
+        
+        // Adiciona um evento de mudança ao checkbox para atualizar dinamicamente o estado do campo de jogador 2
+        checkboxRobo.addEventListener('change', atualizarCampoJogador2);
+
+        // Evento para o botão de zerar Local Storage
+        const btnZerarLocalStorage = document.getElementById('btnZerarLocalStorage');
+        btnZerarLocalStorage.addEventListener('click', zerarLocalStorage);
+    });
+    const localStorage = window.localStorage;
+    let gameWinnersList = localStorage.getItem('gameWinnersList') ? JSON.parse(localStorage.getItem('gameWinnersList')) : [];
+    localStorage.setItem('gameWinnersList', JSON.stringify(gameWinnersList));
+
+    class Player {
+    constructor(nome, simbolo) {
+        this.nome = nome;
+        this.simbolo = simbolo;
+    }
+    }
+
+    class Self {
+    constructor(robo, simbolo, texto, bottonLabel, nomeJogadorAtual, jogadores) {
+        this.robo = robo;
+        this.simbolo = simbolo;
+        this.texto = texto;
+        this.bottonLabel = bottonLabel;
+        this.nomeJogadorAtual = nomeJogadorAtual;
+        this.jogadores = jogadores;
+    }
+    }
+
+    class InforPlay {
+    constructor(total, venceu, podeJogar, quadro, jogadas) {
+        this.total = total;
+        this.venceu = venceu;
+        this.podeJogar = podeJogar;
+        this.quadro = quadro;
+        this.jogadas = jogadas;
+    }
+    }
+
+    class RankingPlayer {
+    constructor(nome) {
+        this.nome = nome;
+        this.vitorias = 0;
+        this.empates = 0;
+        this.derrotas = 0;
+    }
+    }
+
+    window.onload = function () {
+    criaTable();
+    };
+    function criaTable() {
+    const parent = document.getElementById("tableGameWinners");
+    while (parent.firstChild) {
+        parent.firstChild.remove();
+    }
+
+    var row = document.createElement("tr");
+    row.style = 'background-color: #0F2028;';
+
+    var thNome = document.createElement("th");
+    thNome.innerHTML = 'Nome';
+    thNome.style = 'width: 200px; text-align: center; color: #FFFFFF;';
+    row.append(thNome);
+
+    var thVitorias = document.createElement("th");
+    thVitorias.innerHTML = 'Vitórias';
+    thVitorias.style = 'width: 100px; text-align: center; color: #FFFFFF;';
+    row.append(thVitorias);
+
+    var thEmpates = document.createElement("th");
+    thEmpates.innerHTML = 'Empates';
+    thEmpates.style = 'width: 100px; text-align: center; color: #FFFFFF;';
+    row.append(thEmpates);
+
+    var thDerrotas = document.createElement("th");
+    thDerrotas.innerHTML = 'Derrotas';
+    thDerrotas.style = 'width: 100px; text-align: center; color: #FFFFFF;';
+    row.append(thDerrotas);
+
+    const tableNotaSemestre = document.getElementById("tableGameWinners");
+    tableNotaSemestre.insertBefore(row, tableNotaSemestre.childNodes[0]);
+
+    const notasLocalStorage = JSON.parse(localStorage.getItem('gameWinnersList'));
+
+    notasLocalStorage.forEach(item => {
+        criarElemento(item);
+    });
+    }
