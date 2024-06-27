@@ -165,3 +165,51 @@ function atualizarRanking(winner, isDraw = false) {
         criarElemento(item);
     });
     }
+var linhasTabela = document.getElementsByTagName("tr");
+for (var i = 0; i < linhasTabela.length; i++) {
+    if (i == 0) {
+        continue;
+    } else if ((i) % 2 == 0) {
+        linhasTabela[i].className = "styleOne";
+    } else {
+        linhasTabela[i].className = "styleTwo";
+    }
+}
+}
+
+function criarElemento(obj) {
+const existingRow = document.getElementById(obj.nome.trim());
+
+if (existingRow) {
+    existingRow.children[1].innerText = obj.vitorias;
+    existingRow.children[2].innerText = obj.empates;
+    existingRow.children[3].innerText = obj.derrotas;
+} else {
+    var cellTextoNome = document.createElement("td");
+    cellTextoNome.id = obj.nome.trim();
+    cellTextoNome.innerHTML = obj.nome.trim();
+    cellTextoNome.style = 'text-align: center;';
+
+    var cellTextoVitorias = document.createElement("td");
+    cellTextoVitorias.innerHTML = obj.vitorias;
+    cellTextoVitorias.style = 'text-align: center;';
+
+    var cellTextoEmpates = document.createElement("td");
+    cellTextoEmpates.innerHTML = obj.empates;
+    cellTextoEmpates.style = 'text-align: center;';
+
+    var cellTextoDerrotas = document.createElement("td");
+    cellTextoDerrotas.innerHTML = obj.derrotas;
+    cellTextoDerrotas.style = 'text-align: center;';
+
+    var row = document.createElement("tr");
+    row.id = obj.nome.trim();
+    row.appendChild(cellTextoNome);
+    row.appendChild(cellTextoVitorias);
+    row.appendChild(cellTextoEmpates);
+    row.appendChild(cellTextoDerrotas);
+
+    const table = document.getElementById("tableGameWinners");
+    table.appendChild(row);
+}
+}
