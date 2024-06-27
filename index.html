@@ -1,49 +1,68 @@
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <title>Jogo da Velha</title>
-</head>
-<body>
-<div class="div_jogadores">
-    <legend style="color: white; font-weight: bolder;">JOGADORES</legend>
-    <label for="jog1">Jogador 1:</label>
-    <input type="text" id="jog1" name="jogador1"><br><br>
-    <label for="jog2" id="labelJogador2">Jogador 2:</label>
-    <input type="text" id="jog2" name="jogador2"><br><br>
-</div>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+            rel="stylesheet">
+        <title>Jogo da Velha</title>
+    </head>
+    <body>
+        <div class="div_jogadores">
+            <legend
+                style="color: white; font-weight: bolder;">JOGADORES</legend>
+            <label for="jog1">Jogador 1:</label>
+            <input type="text" id="jog1" name="jogador1"><br><br>
+            <label for="jog2" id="labelJogador2">Jogador 2:</label>
+            <input type="text" id="jog2" name="jogador2"><br><br>
+        </div>
 
-<div id="root" class="wood-gradient"></div>
+        <div id="root" class="wood-gradient"></div>
 
-<div class="div_table">
-    <fieldset>
-        <legend style="color: white; font-weight: bolder;">Tabela de Rankings</legend>
-        <table id="tableGameWinners" style="width: 100%;">
-            <thead>
-                <tr>
-                    <th>Jogador</th>
-                    <th>Vitórias</th>
-                    <th>Empates</th>
-                    <th>Derrotas</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Dados serão inseridos dinamicamente -->
-            </tbody>
-        </table>
-    </fieldset>
-    <!-- Botão para zerar o Local Storage -->
-    <button id="btnZerarLocalStorage" onclick="zerarLocalStorage()">Apagar ranking</button>
-</div>
-<script src="https://lemonadejs.net/v1/lemonade.js"></script>
-<script src="./src/assets/js/tictactoe.js"></script>
-<script>
+        <div class="div_table">
+            <fieldset>
+                <legend style="color: white; font-weight: bolder;">Tabela de
+                    Rankings</legend>
+                <table id="tableGameWinners" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Jogador</th>
+                            <th>Vitórias</th>
+                            <th>Empates</th>
+                            <th>Derrotas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Dados serão inseridos dinamicamente -->
+                    </tbody>
+                </table>
+            </fieldset>
+
+            <!-- Botão para zerar o Local Storage -->
+            <button id="btnZerarLocalStorage"
+                onclick="zerarLocalStorage()">Apagar ranking</button>
+        </div>
+        <script src="https://lemonadejs.net/v1/lemonade.js"></script>
+        <script src="./tictactoe.js"></script>
+        <script>
     lemonade.render(JogoVelha, document.getElementById('root'));
 </script>
-</body>
+
+        <dialog id="modalAlerta">
+            <header>
+                <h3 class="headerModal" id="tituloAlerta"></h3>
+            </header>
+            <section class="mensagemAlerta" id="mensagemAlerta"></section>
+            <footer style="float: right;">
+                <button onclick="closeModalAlerta()" style="font-size: 22px;"
+                    id="closeDialogFooter">Sair</button>
+            </footer>
+        </dialog>
+
+    </body>
 </html>
