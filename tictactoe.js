@@ -1,4 +1,80 @@
-// Função para atualizar o estado do campo de jogador 2 e label com base no estado do checkbox
+const JogoVelha = () => {
+let inforPlay = new InforPlay(0, false, false, null, []);
+
+const mensagens = [
+    'Aperte jogar para iniciar',
+    'Agora é sua vez',
+    'Venceu o jogo',
+    'Jogo empatado'
+];
+
+const self = new Self(true, '', mensagens[0], 'Jogar', null, []);
+
+const checkMatching = (val1, val2, val3) => {
+    if (inforPlay.jogadas[val1] === inforPlay.jogadas[val2] && inforPlay.jogadas[val2] === inforPlay.jogadas[val3]) {
+        return inforPlay.jogadas[val1];
+    }
+};
+
+const updateRanking = (playerName, result) => {
+    let rankingPlayer = gameWinnersList.find(o => o.nome.trim() === playerName.trim());
+
+    if (!rankingPlayer) {
+        rankingPlayer = new RankingPlayer(playerName.trim());
+        gameWinnersList.push(rankingPlayer);
+    }
+
+    if (result === 'win') {
+        rankingPlayer.vitorias++;
+    } else if (result === 'draw') {
+        rankingPlayer.empates++;
+    } else if (result === 'loss') {
+        rankingPlayer.derrotas++;
+    }
+
+    localStorage.setItem('gameWinnersList', JSON.stringify(gameWinnersList));
+    criaTable();
+};
+
+const clickedBox = (elemento) => {
+    let winner = false;
+
+    if (elemento) {
+        inforPlay.total++;
+        const id = elemento.getAttribute('data-id');
+        if (!inforPlay.podeJogar || inforPlay.jogadas[id]) {
+            return false;
+        }
+        elemento.innerText = self.simbolo;
+        inforPlay.jogadas[id] = self.simbolo;
+
+        winner = (checkMatching(1, 2, 3) || checkMatching(4, 5, 6) || checkMatching(7, 8, 9) ||
+            checkMatching(1, 4, 7) || checkMatching(2, 5, 8) || checkMatching(3, 6, 9) ||
+            checkMatching(1, 5, 9) || checkMatching(3, 5, 7));
+
+        if (winner) {
+            inforPlay.total = 0;
+            inforPlay.venceu = true;
+            self.simbolo = winner;
+            self.texto = mensagens[2];
+            inforPlay.podeJogar = false;
+            const mensagem = document.getElementById('mensagem');
+            mensagem.className = "efeitoVenceu";
+
+            updateRanking(self.nomeJogadorAtual.trim(), 'win');
+            updateRanking(self.jogadores.find(player => player.simbolo !== self.simbolo).nome.trim(), 'loss');
+        } else {
+            if (self.simbolo === 'x') {
+                self.simbolo = 'o';
+                let playCurrent = self.jogadores.find(o => o.simbolo.trim() === self.simbolo.trim());
+                self.nomeJogadorAtual = playCurrent.nome.trim();
+            } else {
+                self.simbolo = 'x';
+                let playCurrent = self.jogadores.find(o => o.simbolo.trim() === self.simbolo.trim());
+                self.nomeJogadorAtual = playCurrent.nome.trim();
+            }
+        }
+    }// Função para atualizar o estado do campo de jogador 2 e label com base no estado do checkbox
 function atualizarCampoJogador2() {
     const jogador2Nome = document.getElementById('jog2');
     const labelJogador2 = document.getElementById('labelJogador2');
