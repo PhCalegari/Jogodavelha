@@ -1,4 +1,37 @@
-body {
+.btn:hover {
+  background: linear-gradient(to bottom, rgb(101, 96, 96) 0%, rgba(0, 0, 0, 1) 100%);
+}
+.div_jogadores{
+  color: white;
+}
+/* Gradiente com mais nuances */
+.wood-gradient {
+    border-radius: 25px;
+    background: #0F1035;
+}
+
+ .efeitoVenceu {
+  animation: efeitoVenceu 1s infinite alternate;
+  -webkit-animation: efeitoVenceu 1s infinite alternate;
+}
+
+@keyframes efeitoVenceu {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+    transform: scale(2);
+  }
+  51% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
